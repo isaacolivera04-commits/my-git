@@ -1,2 +1,0 @@
-git statusOn branch main
-Your branch is up to date with 'origin/main'.
