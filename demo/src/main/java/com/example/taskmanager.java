@@ -1,5 +1,7 @@
+package com.example;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class taskmanager {
 
@@ -20,8 +22,8 @@ public class taskmanager {
         }
     }
 
-    private ArrayList<Tarefa> tarefas = new ArrayList<>();
-    private ArrayList<String> usuarios = new ArrayList<>();
+    private final ArrayList<Tarefa> tarefas = new ArrayList<>();
+    private final ArrayList<String> usuarios = new ArrayList<>();
     private String usuarioLogado = null;
 
     public boolean cadastrarUsuario(String nome) {
@@ -93,40 +95,40 @@ public class taskmanager {
 
     public static void main(String[] args) {
         taskmanager manager = new taskmanager();
-        Scanner scanner = new Scanner(System.in);
-        int choice;
-        System.out.println("=== Sistema de Gerenciamento de Tarefas ===");
-        do {
-            System.out.println("\n--- MENU ---");
-            if (manager.usuarioLogado != null) System.out.println("Logado como: " + manager.usuarioLogado);
-            System.out.println("1. Cadastrar usuário");
-            System.out.println("2. Login");
-            System.out.println("3. Adicionar tarefa");
-            System.out.println("4. Remover tarefa");
-            System.out.println("5. Alterar status");
-            System.out.println("6. Exibir tarefas");
-            System.out.println("7. Relatório");
-            System.out.println("8. Logout");
-            System.out.println("0. Sair");
-            System.out.print("Escolha: ");
-            choice = lerInt(scanner);
-            switch (choice) {
-                case 1 -> { System.out.print("Nome: "); manager.cadastrarUsuario(scanner.nextLine().trim()); }
-                case 2 -> { System.out.print("Nome: "); manager.login(scanner.nextLine().trim()); }
-                case 3 -> { System.out.print("Título: "); manager.adicionarTarefa(scanner.nextLine().trim()); }
-                case 4 -> { manager.exibirTarefas(); System.out.print("Número: "); manager.removerTarefa(lerInt(scanner) - 1); }
-                case 5 -> { manager.exibirTarefas(); System.out.print("Número: "); int idx = lerInt(scanner) - 1;
+        try (Scanner scanner = new Scanner(System.in)) {
+            int choice;
+            System.out.println("=== Sistema de Gerenciamento de Tarefas ===");
+            do {
+                System.out.println("\n--- MENU ---");
+                if (manager.usuarioLogado != null) System.out.println("Logado como: " + manager.usuarioLogado);
+                System.out.println("1. Cadastrar usuário");
+                System.out.println("2. Login");
+                System.out.println("3. Adicionar tarefa");
+                System.out.println("4. Remover tarefa");
+                System.out.println("5. Alterar status");
+                System.out.println("6. Exibir tarefas");
+                System.out.println("7. Relatório");
+                System.out.println("8. Logout");
+                System.out.println("0. Sair");
+                System.out.print("Escolha: ");
+                choice = lerInt(scanner);
+                switch (choice) {
+                    case 1 -> { System.out.print("Nome: "); manager.cadastrarUsuario(scanner.nextLine().trim()); }
+                    case 2 -> { System.out.print("Nome: "); manager.login(scanner.nextLine().trim()); }
+                    case 3 -> { System.out.print("Título: "); manager.adicionarTarefa(scanner.nextLine().trim()); }
+                    case 4 -> { manager.exibirTarefas(); System.out.print("Número: "); manager.removerTarefa(lerInt(scanner) - 1); }
+                    case 5 -> { manager.exibirTarefas(); System.out.print("Número: "); int idx = lerInt(scanner) - 1;
                     System.out.println("1-PENDENTE 2-EM_ANDAMENTO 3-CONCLUIDA"); int s = lerInt(scanner);
                     String[] st = {"PENDENTE","EM_ANDAMENTO","CONCLUIDA"};
                     if (s >= 1 && s <= 3) manager.alterarStatus(idx, st[s-1]); }
-                case 6 -> manager.exibirTarefas();
-                case 7 -> manager.exibirRelatorio();
-                case 8 -> manager.logout();
-                case 0 -> System.out.println("Encerrando!");
-                default -> System.out.println("Opção inválida.");
-            }
-        } while (choice != 0);
-        scanner.close();
+                    case 6 -> manager.exibirTarefas();
+                    case 7 -> manager.exibirRelatorio();
+                    case 8 -> manager.logout();
+                    case 0 -> System.out.println("Encerrando!");
+                    default -> System.out.println("Opção inválida.");
+                }
+            } while (choice != 0);
+        }
     }
 
     private static int lerInt(Scanner sc) {
